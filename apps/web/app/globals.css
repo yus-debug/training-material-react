@@ -1,0 +1,19 @@
+:root {
+  /* injected by tokens package at runtime/build; fallback demo values */
+  --md-sys-color-primary: #6750a4;
+  --md-sys-color-on-primary: #ffffff;
+  --md-sys-color-surface: #fffbfe;
+  --md-sys-color-on-surface: #1c1b1f;
+}
+
+html[data-theme='dark'] {
+  --md-sys-color-primary: #d0bcff;
+  --md-sys-color-on-primary: #381e72;
+  --md-sys-color-surface: #141218;
+  --md-sys-color-on-surface: #e6e0e9;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+
+

@@ -1,0 +1,1012 @@
+{
+  "info": {
+    "name": "Inventory Management API - Complete Enterprise Collection",
+    "description": "Comprehensive API collection for testing the full inventory management system with customers, suppliers, orders, stock management, and reporting features.",
+    "version": "2.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8000",
+      "type": "string"
+    },
+    {
+      "key": "customerId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "supplierId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "orderId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "inventoryItemId",
+      "value": "1",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health & System",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["health"]
+            },
+            "description": "Check if the API is running and database is accessible"
+          },
+          "response": []
+        },
+        {
+          "name": "API Documentation",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/docs",
+              "host": ["{{baseUrl}}"],
+              "path": ["docs"]
+            },
+            "description": "Access interactive API documentation"
+          },
+          "response": []
+        }
+      ],
+      "description": "System health and documentation endpoints"
+    },
+    {
+      "name": "Inventory Management",
+      "item": [
+        {
+          "name": "Get All Inventory Items",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/inventory?page=1&size=50",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "inventory"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number"
+                },
+                {
+                  "key": "size",
+                  "value": "50",
+                  "description": "Items per page"
+                },
+                {
+                  "key": "search",
+                  "value": "",
+                  "description": "Search term",
+                  "disabled": true
+                },
+                {
+                  "key": "category",
+                  "value": "",
+                  "description": "Filter by category",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Get inventory items with pagination and filtering"
+          },
+          "response": []
+        },
+        {
+          "name": "Search Inventory Items",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/inventory?search=wireless&category=electronics",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "inventory"],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "wireless"
+                },
+                {
+                  "key": "category",
+                  "value": "electronics"
+                }
+              ]
+            },
+            "description": "Search inventory items by name/SKU and filter by category"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Single Inventory Item",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/inventory/{{inventoryItemId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "inventory", "{{inventoryItemId}}"]
+            },
+            "description": "Get a specific inventory item by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Inventory Item",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Bluetooth Speaker\",\n  \"description\": \"Portable wireless speaker with great sound quality\",\n  \"category\": \"electronics\",\n  \"quantity\": 15,\n  \"price\": 49.99,\n  \"sku\": \"SPK-001\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/inventory",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "inventory"]
+            },
+            "description": "Create a new inventory item"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Inventory Item",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantity\": 20,\n  \"price\": 89.99,\n  \"description\": \"Updated: High-quality bluetooth headphones with enhanced noise cancellation\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/inventory/{{inventoryItemId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "inventory", "{{inventoryItemId}}"]
+            },
+            "description": "Update an existing inventory item"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Inventory Item",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/inventory/{{inventoryItemId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "inventory", "{{inventoryItemId}}"]
+            },
+            "description": "Delete an inventory item"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/categories",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "categories"]
+            },
+            "description": "Get list of available inventory categories"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Low Stock Items",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/inventory/low-stock?threshold=20",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "inventory", "low-stock"],
+              "query": [
+                {
+                  "key": "threshold",
+                  "value": "20",
+                  "description": "Stock threshold"
+                }
+              ]
+            },
+            "description": "Get items with low stock levels"
+          },
+          "response": []
+        }
+      ],
+      "description": "Inventory item management endpoints"
+    },
+    {
+      "name": "Customer Management",
+      "item": [
+        {
+          "name": "Get All Customers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/customers?page=1&size=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "customers"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                },
+                {
+                  "key": "search",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "is_active",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Get customers with pagination and filtering"
+          },
+          "response": []
+        },
+        {
+          "name": "Search Customers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/customers?search=alice&is_active=true",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "customers"],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "alice"
+                },
+                {
+                  "key": "is_active",
+                  "value": "true"
+                }
+              ]
+            },
+            "description": "Search customers by name or email"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Single Customer",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/customers/{{customerId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "customers", "{{customerId}}"]
+            },
+            "description": "Get a specific customer by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Customer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"phone\": \"+1-555-2000\",\n  \"address_line1\": \"123 Test Street\",\n  \"city\": \"Test City\",\n  \"state\": \"CA\",\n  \"postal_code\": \"12345\",\n  \"country\": \"USA\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/customers",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "customers"]
+            },
+            "description": "Create a new customer"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Customer",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"+1-555-9999\",\n  \"address_line1\": \"456 Updated Avenue\",\n  \"city\": \"Updated City\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/customers/{{customerId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "customers", "{{customerId}}"]
+            },
+            "description": "Update an existing customer"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Customer",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/customers/{{customerId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "customers", "{{customerId}}"]
+            },
+            "description": "Delete a customer (soft delete if has orders)"
+          },
+          "response": []
+        }
+      ],
+      "description": "Customer management endpoints"
+    },
+    {
+      "name": "Supplier Management",
+      "item": [
+        {
+          "name": "Get All Suppliers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/suppliers?page=1&size=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "suppliers"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Get suppliers with pagination"
+          },
+          "response": []
+        },
+        {
+          "name": "Search Suppliers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/suppliers?search=tech&is_active=true",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "suppliers"],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "tech"
+                },
+                {
+                  "key": "is_active",
+                  "value": "true"
+                }
+              ]
+            },
+            "description": "Search suppliers by name or contact"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Single Supplier",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/suppliers/{{supplierId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "suppliers", "{{supplierId}}"]
+            },
+            "description": "Get a specific supplier by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Supplier",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"New Tech Supplier Inc\",\n  \"contact_person\": \"Jane Smith\",\n  \"email\": \"jane@newtechsupplier.com\",\n  \"phone\": \"+1-555-3000\",\n  \"address_line1\": \"789 Supplier Street\",\n  \"city\": \"Supplier City\",\n  \"state\": \"CA\",\n  \"postal_code\": \"54321\",\n  \"tax_id\": \"TAX-999999\",\n  \"payment_terms\": \"Net 45\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/suppliers",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "suppliers"]
+            },
+            "description": "Create a new supplier"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Supplier",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"payment_terms\": \"Net 60\",\n  \"phone\": \"+1-555-8888\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/suppliers/{{supplierId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "suppliers", "{{supplierId}}"]
+            },
+            "description": "Update an existing supplier"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Supplier",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/suppliers/{{supplierId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "suppliers", "{{supplierId}}"]
+            },
+            "description": "Delete a supplier (soft delete if has items)"
+          },
+          "response": []
+        }
+      ],
+      "description": "Supplier management endpoints"
+    },
+    {
+      "name": "Order Management",
+      "item": [
+        {
+          "name": "Get All Orders",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders?page=1&size=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                },
+                {
+                  "key": "status",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "customer_id",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Get orders with pagination and filtering"
+          },
+          "response": []
+        },
+        {
+          "name": "Filter Orders by Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders?status=pending&customer_id=1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "pending"
+                },
+                {
+                  "key": "customer_id",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Filter orders by status and customer"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Single Order",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/{{orderId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "{{orderId}}"]
+            },
+            "description": "Get a specific order by ID with items"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer_id\": 1,\n  \"shipping_address_line1\": \"123 Shipping Street\",\n  \"shipping_city\": \"Shipping City\",\n  \"shipping_state\": \"CA\",\n  \"shipping_postal_code\": \"12345\",\n  \"tax_rate\": 0.08,\n  \"shipping_cost\": 9.99,\n  \"notes\": \"Test order from API\",\n  \"items\": [\n    {\n      \"inventory_item_id\": 1,\n      \"quantity\": 1,\n      \"unit_price\": 99.99\n    },\n    {\n      \"inventory_item_id\": 2,\n      \"quantity\": 2,\n      \"unit_price\": 19.99\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/orders",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders"]
+            },
+            "description": "Create a new order with items (automatically updates inventory)"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Order Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"processing\",\n  \"notes\": \"Order is being processed\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/{{orderId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "{{orderId}}"]
+            },
+            "description": "Update order status and notes"
+          },
+          "response": []
+        },
+        {
+          "name": "Cancel Order",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/{{orderId}}/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "{{orderId}}", "cancel"]
+            },
+            "description": "Cancel an order and restore inventory"
+          },
+          "response": []
+        }
+      ],
+      "description": "Order management endpoints"
+    },
+    {
+      "name": "Stock Management",
+      "item": [
+        {
+          "name": "Get All Stock Movements",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/stock/movements?page=1&size=20",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "stock", "movements"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "size",
+                  "value": "20"
+                },
+                {
+                  "key": "inventory_item_id",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "movement_type",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Get stock movements with filtering"
+          },
+          "response": []
+        },
+        {
+          "name": "Filter Stock Movements",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/stock/movements?inventory_item_id=1&movement_type=out",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "stock", "movements"],
+              "query": [
+                {
+                  "key": "inventory_item_id",
+                  "value": "1"
+                },
+                {
+                  "key": "movement_type",
+                  "value": "out"
+                }
+              ]
+            },
+            "description": "Filter stock movements by item and type"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Manual Stock Adjustment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inventory_item_id\": 1,\n  \"movement_type\": \"adjustment\",\n  \"quantity\": 5,\n  \"reference_type\": \"manual_adjustment\",\n  \"notes\": \"Manual stock increase via API\",\n  \"created_by\": \"api_user\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/stock/movements",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "stock", "movements"]
+            },
+            "description": "Create a manual stock adjustment"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Current Stock Levels",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/stock/levels",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "stock", "levels"],
+              "query": [
+                {
+                  "key": "low_stock_only",
+                  "value": "false",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Get current stock levels for all items"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Low Stock Items Only",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/stock/levels?low_stock_only=true",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "stock", "levels"],
+              "query": [
+                {
+                  "key": "low_stock_only",
+                  "value": "true"
+                }
+              ]
+            },
+            "description": "Get only items with low stock levels"
+          },
+          "response": []
+        }
+      ],
+      "description": "Stock tracking and movement endpoints"
+    },
+    {
+      "name": "Reports & Analytics",
+      "item": [
+        {
+          "name": "Get Inventory Valuation Report",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reports/inventory-valuation",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "reports", "inventory-valuation"]
+            },
+            "description": "Get inventory valuation report with cost/retail values"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Sales Summary Report",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reports/sales-summary",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "reports", "sales-summary"],
+              "query": [
+                {
+                  "key": "date_from",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "date_to",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Get sales summary for all time or specific period"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Sales Summary by Date Range",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/reports/sales-summary?date_from=2025-08-01T00:00:00Z&date_to=2025-08-31T23:59:59Z",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "reports", "sales-summary"],
+              "query": [
+                {
+                  "key": "date_from",
+                  "value": "2025-08-01T00:00:00Z"
+                },
+                {
+                  "key": "date_to",
+                  "value": "2025-08-31T23:59:59Z"
+                }
+              ]
+            },
+            "description": "Get sales summary for a specific date range"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Dashboard Summary",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/dashboard/summary",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "dashboard", "summary"]
+            },
+            "description": "Get dashboard summary with KPIs, recent activity, and alerts"
+          },
+          "response": []
+        }
+      ],
+      "description": "Business intelligence and reporting endpoints"
+    },
+    {
+      "name": "Test Scenarios",
+      "item": [
+        {
+          "name": "Complete Order Flow Test",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer_id\": 2,\n  \"shipping_address_line1\": \"999 Test Drive\",\n  \"shipping_city\": \"Test City\",\n  \"shipping_state\": \"TX\",\n  \"shipping_postal_code\": \"78901\",\n  \"tax_rate\": 0.0825,\n  \"shipping_cost\": 15.00,\n  \"notes\": \"Complete flow test order\",\n  \"items\": [\n    {\n      \"inventory_item_id\": 3,\n      \"quantity\": 1,\n      \"unit_price\": 29.99\n    },\n    {\n      \"inventory_item_id\": 4,\n      \"quantity\": 2,\n      \"unit_price\": 12.99\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/orders",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders"]
+            },
+            "description": "Test complete order creation flow with inventory updates"
+          },
+          "response": []
+        },
+        {
+          "name": "Bulk Stock Adjustment Test",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inventory_item_id\": 8,\n  \"movement_type\": \"in\",\n  \"quantity\": 50,\n  \"unit_cost\": 3.25,\n  \"reference_type\": \"bulk_purchase\",\n  \"notes\": \"Bulk restocking - Q4 preparation\",\n  \"created_by\": \"warehouse_manager\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/stock/movements",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "stock", "movements"]
+            },
+            "description": "Test bulk stock adjustment with cost tracking"
+          },
+          "response": []
+        },
+        {
+          "name": "Error Handling - Invalid Customer Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer_id\": 999,\n  \"items\": [\n    {\n      \"inventory_item_id\": 1,\n      \"quantity\": 1,\n      \"unit_price\": 99.99\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/orders",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders"]
+            },
+            "description": "Test error handling for invalid customer ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Error Handling - Insufficient Stock",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer_id\": 1,\n  \"items\": [\n    {\n      \"inventory_item_id\": 1,\n      \"quantity\": 1000,\n      \"unit_price\": 99.99\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/orders",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders"]
+            },
+            "description": "Test error handling for insufficient stock"
+          },
+          "response": []
+        }
+      ],
+      "description": "End-to-end test scenarios and error handling"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Set dynamic timestamps for date range tests",
+          "const now = new Date();",
+          "const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);",
+          "const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);",
+          "",
+          "pm.collectionVariables.set('currentMonth_start', startOfMonth.toISOString());",
+          "pm.collectionVariables.set('currentMonth_end', endOfMonth.toISOString());"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Global test script for all requests",
+          "pm.test('Status code is successful', function () {",
+          "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+          "});",
+          "",
+          "pm.test('Response time is less than 2000ms', function () {",
+          "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+          "});",
+          "",
+          "// Extract IDs from creation responses for use in subsequent requests",
+          "if (pm.response.code === 201 && pm.response.json()) {",
+          "    const responseJson = pm.response.json();",
+          "    if (responseJson.id) {",
+          "        const endpoint = pm.request.url.path.join('/');",
+          "        if (endpoint.includes('customers')) {",
+          "            pm.collectionVariables.set('customerId', responseJson.id);",
+          "        } else if (endpoint.includes('suppliers')) {",
+          "            pm.collectionVariables.set('supplierId', responseJson.id);",
+          "        } else if (endpoint.includes('orders')) {",
+          "            pm.collectionVariables.set('orderId', responseJson.id);",
+          "        } else if (endpoint.includes('inventory')) {",
+          "            pm.collectionVariables.set('inventoryItemId', responseJson.id);",
+          "        }",
+          "    }",
+          "}"
+        ]
+      }
+    }
+  ]
+}

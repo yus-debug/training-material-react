@@ -1,0 +1,16 @@
+{
+  "color": {
+    "md": {
+      "sys": {
+        "color": {
+          "primary": { "value": "#6750a4" },
+          "on-primary": { "value": "#ffffff" },
+          "surface": { "value": "#fffbfe" },
+          "on-surface": { "value": "#1c1b1f" }
+        }
+      }
+    }
+  }
+}
+
+

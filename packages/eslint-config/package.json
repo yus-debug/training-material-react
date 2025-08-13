@@ -1,0 +1,19 @@
+{
+  "name": "@sample/eslint-config",
+  "version": "0.1.0",
+  "private": true,
+  "main": "index.cjs",
+  "peerDependencies": {
+    "eslint": ">=9",
+    "eslint-config-airbnb": ">=19",
+    "eslint-config-prettier": ">=9",
+    "eslint-plugin-import": ">=2",
+    "eslint-plugin-jsx-a11y": ">=6",
+    "eslint-plugin-react": ">=7",
+    "eslint-plugin-react-hooks": ">=4",
+    "@typescript-eslint/eslint-plugin": ">=7",
+    "@typescript-eslint/parser": ">=7"
+  }
+}
+
+
