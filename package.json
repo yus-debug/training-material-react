@@ -13,8 +13,9 @@
     "typescript": "^5.5.4"
   },
   "scripts": {
+    "dev": "pnpm --filter @sample/web dev",
+    "dev:all": "turbo run dev",
     "build": "turbo build",
-    "dev": "turbo dev",
     "lint": "turbo lint",
     "test": "turbo test",
     "clean": "turbo clean",

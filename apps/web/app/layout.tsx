@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google'
 import Providers from '../providers'
 import { ThemeProvider as NextThemeProvider } from 'next-themes'
 import './globals.css'
-
+import { Header } from '../components/Header'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -16,7 +16,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <NextThemeProvider attribute="data-theme" defaultTheme="system" enableSystem>
-          <Providers>{children}</Providers>
+          <Providers>
+            <Header/>
+            {children}
+          </Providers>
         </NextThemeProvider>
       </body>
     </html>
