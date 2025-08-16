@@ -1,6 +1,12 @@
 import { Button, Container, Stack, Typography, Card, CardContent } from '@mui/material'
 import { InventoryCard } from '@sample/ui'
 import Link from 'next/link'
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Sample Inventory',
+  description: 'Inventory learning monorepo with MUI MD3 and tokens',
+};
 
 export default function HomePage() {
   return (
@@ -9,7 +15,7 @@ export default function HomePage() {
         <Typography variant="h3" component="h1" textAlign="center">
           Inventory Management System
         </Typography>
-        
+
         <Typography variant="h6" color="text.secondary" textAlign="center">
           A modern inventory management solution built with Next.js, MUI, and Material Design 3
         </Typography>
@@ -40,19 +46,24 @@ export default function HomePage() {
         </Card>
 
         <Stack direction="row" spacing={2} justifyContent="center">
-          <Button 
-            variant="contained" 
+          {/* Page navigation (typed route is fine) */}
+          <Button
+            variant="contained"
             size="large"
             component={Link}
             href="/inventory"
           >
             Open Inventory
           </Button>
-          <Button 
-            variant="outlined" 
+
+          {/* ✅ API endpoint: use a plain anchor, not next/link */}
+          <Button
+            variant="outlined"
             size="large"
-            component={Link}
+            component="a"
             href="/api/health"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             API Health
           </Button>
@@ -61,5 +72,3 @@ export default function HomePage() {
     </Container>
   )
 }
-
-

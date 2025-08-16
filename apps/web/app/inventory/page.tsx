@@ -20,7 +20,11 @@ import {
   Alert,
   Snackbar,
 } from '@mui/material'
-import { DataGrid, type GridColDef, GridActionsCellItem } from '@mui/x-data-grid'
+import {
+  DataGrid,
+  type GridColDef,
+  GridActionsCellItem,
+} from '@mui/x-data-grid'
 import { Add as AddIcon, Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material'
 import { InventoryForm, type InventoryFormData } from '@sample/ui'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
@@ -68,7 +72,6 @@ export default function InventoryPage() {
 
   const handleUpdateItem = async (data: InventoryFormData) => {
     if (!editingItem) return
-    
     try {
       await dispatch(updateInventoryItem({ id: editingItem.id, data })).unwrap()
       setFormOpen(false)
@@ -82,7 +85,6 @@ export default function InventoryPage() {
 
   const handleDeleteItem = async () => {
     if (!itemToDelete) return
-    
     try {
       await dispatch(deleteInventoryItem(itemToDelete)).unwrap()
       setDeleteConfirmOpen(false)
@@ -95,7 +97,7 @@ export default function InventoryPage() {
   }
 
   const handleEdit = (id: string) => {
-    const item = items.find(item => item.id === id)
+    const item = items.find(it => it.id === id)
     if (item) {
       setEditingItem(item)
       setFormOpen(true)
@@ -112,12 +114,16 @@ export default function InventoryPage() {
     { field: 'sku', headerName: 'SKU', width: 120 },
     { field: 'category', headerName: 'Category', width: 130 },
     { field: 'quantity', headerName: 'Quantity', type: 'number', width: 100 },
-    { 
-      field: 'price', 
-      headerName: 'Price', 
-      type: 'number', 
+    {
+      field: 'price',
+      headerName: 'Price',
+      type: 'number',
       width: 100,
-      valueFormatter: (value) => `$${value.toFixed(2)}`
+      // Local typing so TS knows `value` is a number-like
+      valueFormatter: (value: any) => `$${Number(value ?? 0).toFixed(2)}`,
+      // If your DataGrid passes params object instead of raw value in your version,
+      // use this instead:
+      // valueFormatter: (params: any) => `$${Number(params?.value ?? 0).toFixed(2)}`,
     },
     { field: 'description', headerName: 'Description', width: 300 },
     {
@@ -162,7 +168,7 @@ export default function InventoryPage() {
         {/* Filters */}
         <Card>
           <CardContent>
-            <Stack direction="row" spacing={2} alignItems="center">
+            <Stack direction="row" spacing={2} alignItems="center" flexWrap="wrap">
               <TextField
                 label="Search"
                 value={filter.search}
@@ -181,7 +187,7 @@ export default function InventoryPage() {
                   <MenuItem value="electronics">Electronics</MenuItem>
                   <MenuItem value="clothing">Clothing</MenuItem>
                   <MenuItem value="books">Books</MenuItem>
-                  <MenuItem value="home">Home & Garden</MenuItem>
+                  <MenuItem value="home">Home &amp; Garden</MenuItem>
                   <MenuItem value="other">Other</MenuItem>
                 </Select>
               </FormControl>
@@ -206,9 +212,7 @@ export default function InventoryPage() {
 
         {/* Form Dialog */}
         <Dialog open={formOpen} onClose={() => setFormOpen(false)} maxWidth="md" fullWidth>
-          <DialogTitle>
-            {editingItem ? 'Edit Item' : 'Add New Item'}
-          </DialogTitle>
+          <DialogTitle>{editingItem ? 'Edit Item' : 'Add New Item'}</DialogTitle>
           <DialogContent>
             <InventoryForm
               initialData={editingItem}
@@ -229,12 +233,7 @@ export default function InventoryPage() {
           </DialogContent>
           <DialogActions>
             <Button onClick={() => setDeleteConfirmOpen(false)}>Cancel</Button>
-            <Button 
-              onClick={handleDeleteItem} 
-              color="error" 
-              variant="contained"
-              disabled={loading}
-            >
+            <Button onClick={handleDeleteItem} color="error" variant="contained" disabled={loading}>
               Delete
             </Button>
           </DialogActions>
@@ -249,10 +248,7 @@ export default function InventoryPage() {
         />
 
         {error && (
-          <Alert 
-            severity="error" 
-            onClose={() => dispatch(clearError())}
-          >
+          <Alert severity="error" onClose={() => dispatch(clearError())}>
             {error}
           </Alert>
         )}
