@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Providers>
             <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
               <Header onMenuClick={handleMenuClick} />
-              {/* ✅ exactly as you wanted to keep it */}
+             
               <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
               <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 {children}
