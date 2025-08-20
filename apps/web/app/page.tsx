@@ -51,8 +51,7 @@ export default function HomePage() {
             variant="contained"
             size="large"
             component={Link}
-            href="/inventory"
-          >
+            href="/inventory-list?delay=1200"            >
             Open Inventory
           </Button>
 

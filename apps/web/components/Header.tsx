@@ -22,7 +22,7 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
 
   const NAV = [
     { href: '/', label: 'Home' },
-    { href: '/inventory', label: 'Inventory' },
+    { href: '/inventory-list?delay=1200', label: 'Inventory' },
     { href: '/reports', label: 'Reports' },
   ] as const
 
