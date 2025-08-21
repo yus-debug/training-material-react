@@ -6,6 +6,7 @@ from typing import Optional, List
 from decimal import Decimal
 from pydantic import BaseModel, Field, validator, EmailStr
 from models import OrderStatusEnum, StockMovementTypeEnum, CategoryEnum
+from schemas import InventoryItemResponse
 
 
 # Customer Schemas
@@ -122,7 +123,7 @@ class OrderItemResponse(OrderItemBase):
     """Schema for order item responses."""
     id: int
     total_price: Decimal
-    inventory_item: Optional[dict] = None  # Will be populated with item details
+    inventory_item: Optional[InventoryItemResponse] = None  # Will be populated with item details
     created_at: datetime
     
     class Config:
@@ -231,7 +232,7 @@ class PurchaseOrderItemResponse(PurchaseOrderItemBase):
     id: int
     quantity_received: int
     total_cost: Decimal
-    inventory_item: Optional[dict] = None
+    inventory_item: Optional[InventoryItemResponse] = None
     created_at: datetime
     
     class Config:
