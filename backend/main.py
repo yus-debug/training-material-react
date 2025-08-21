@@ -105,6 +105,20 @@ async def get_inventory_items(
 
 
 @app.get(
+    "/api/inventory/low-stock",
+    response_model=List[InventoryItemResponse],
+    tags=["Inventory"],
+    summary="Get low stock items",
+    description="Get items with low stock levels"
+)
+async def get_low_stock_items(
+    threshold: int = Query(10, ge=0, description="Stock threshold"),
+    db: Session = Depends(get_db)
+):
+    """Get items with low stock."""
+    return inventory_crud.get_low_stock_items(db=db, threshold=threshold)
+
+@app.get(
     "/api/inventory/{item_id}",
     response_model=InventoryItemResponse,
     tags=["Inventory"],
@@ -194,21 +208,6 @@ async def delete_inventory_item(
 async def get_categories(db: Session = Depends(get_db)):
     """Get all available categories."""
     return inventory_crud.get_categories(db=db)
-
-
-@app.get(
-    "/api/inventory/low-stock",
-    response_model=List[InventoryItemResponse],
-    tags=["Inventory"],
-    summary="Get low stock items",
-    description="Get items with low stock levels"
-)
-async def get_low_stock_items(
-    threshold: int = Query(10, ge=0, description="Stock threshold"),
-    db: Session = Depends(get_db)
-):
-    """Get items with low stock."""
-    return inventory_crud.get_low_stock_items(db=db, threshold=threshold)
 
 
 # Exception handlers
