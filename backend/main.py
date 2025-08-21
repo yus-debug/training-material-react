@@ -118,7 +118,6 @@ async def get_low_stock_items(
     """Get items with low stock."""
     return inventory_crud.get_low_stock_items(db=db, threshold=threshold)
 
-
 @app.get(
     "/api/inventory/{item_id}",
     response_model=InventoryItemResponse,
