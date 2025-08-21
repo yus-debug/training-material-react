@@ -231,9 +231,12 @@ async def internal_server_error_handler(request, exc):
 
 if __name__ == "__main__":
     import uvicorn
+    print(f"🚀 Starting FastAPI server on http://0.0.0.0:{settings.api_port}")
+    print(f"📚 API documentation: http://localhost:{settings.api_port}/docs")
     uvicorn.run(
         "main:app",
-        host=settings.api_host,
+        host="0.0.0.0",
         port=settings.api_port,
-        reload=settings.debug
+        reload=settings.debug,
+        log_level="info"
     )
