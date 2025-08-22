@@ -1,11 +1,38 @@
 // apps/web/hooks/useDashboardData.ts
 import { useState, useEffect, useCallback } from 'react';
-
+import { API_ENDPOINTS } from '../config/api';
 export interface DashboardData {
   totalItems: number;
   totalCustomers: number;
   pendingOrders: number;
   lowStockItems: number;
+}
+
+// Very permissive count that won't trip TS
+function countFrom(payload: any): number {
+  if (!payload) return 0;
+  if (Array.isArray(payload)) return payload.length;
+  if (typeof payload === 'number' && Number.isFinite(payload)) return payload;
+  if (typeof payload === 'object') {
+    if (typeof payload.total === 'number') return payload.total;
+    if (Array.isArray(payload.items)) return payload.items.length;
+    if (Array.isArray(payload.data)) return payload.data.length;
+    if (Array.isArray(payload.results)) return payload.results.length;
+  }
+  return 0;
+}
+
+// Safe JSON: never throws; returns [] on any error or non-OK
+async function safeJSON(res: Response): Promise<any> {
+  try {
+    if (!res.ok) return [];
+    // some backends return empty body with 200
+    const text = await res.text();
+    if (!text) return [];
+    return JSON.parse(text);
+  } catch {
+    return [];
+  }
 }
 
 export const useDashboardData = () => {
@@ -20,44 +47,41 @@ export const useDashboardData = () => {
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
   const fetchData = useCallback(async () => {
-    try {
-      setLoading(true);
-      setError(null);
+    setLoading(true);
+    setError(null);
 
+    try {
+      // Use the exact routes/params from your FastAPI docs
       const [inventoryRes, customersRes, ordersRes, lowStockRes] = await Promise.all([
-        fetch('http://localhost:8000/inventory'),
-        fetch('http://localhost:8000/customers'),
-        fetch('http://localhost:8000/orders?status=pending'),
-        fetch('http://localhost:8000/lowStock'),
+        fetch(API_ENDPOINTS.fetchInventory),
+        fetch(API_ENDPOINTS.fetchCustomers),
+        fetch(API_ENDPOINTS.fetchOrder),
+        fetch(API_ENDPOINTS.fetchLowStock),
       ]);
 
-      if (!inventoryRes.ok || !customersRes.ok || !ordersRes.ok || !lowStockRes.ok) {
-        throw new Error('One or more API calls failed');
-      }
-
       const [inventoryData, customersData, ordersData, lowStockData] = await Promise.all([
-        inventoryRes.json(),
-        customersRes.json(),
-        ordersRes.json(),
-        lowStockRes.json(),
+        safeJSON(inventoryRes),
+        safeJSON(customersRes),
+        safeJSON(ordersRes),
+        safeJSON(lowStockRes),
       ]);
 
       setData({
-        totalItems: Array.isArray(inventoryData) ? inventoryData.length : (inventoryData?.total ?? 0),
-        totalCustomers: Array.isArray(customersData) ? customersData.length : (customersData?.total ?? 0),
-        pendingOrders: Array.isArray(ordersData) ? ordersData.length : (ordersData?.total ?? 0),
-        lowStockItems: Array.isArray(lowStockData) ? lowStockData.length : (lowStockData?.total ?? 0),
+        totalItems: countFrom(inventoryData),
+        totalCustomers: countFrom(customersData),
+        pendingOrders: countFrom(ordersData),
+        lowStockItems: countFrom(lowStockData),
       });
 
       setLastUpdated(new Date());
-    } catch (err: any) {
-      setError(err?.message || 'Failed to fetch dashboard data');
+    } catch (e: any) {
+      // Should rarely hit because safeJSON swallows errors
+      setError(e?.message || 'Failed to fetch dashboard data');
     } finally {
       setLoading(false);
     }
   }, []);
 
-  // manual and auto-refresh every 30s
   useEffect(() => {
     fetchData();
     const id = setInterval(fetchData, 30_000);

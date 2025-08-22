@@ -1,6 +1,6 @@
 {
-  "/api/inventory": "/inventory",
-  "/api/customers": "/customers",
-  "/api/orders": "/orders",
+  "/api/inventory": "/inventoryItems",
+  "/api/customers": "/customersList",
+  "/api/orders": "/ordersList",
   "/api/inventory/low-stock": "/lowStock"
 }
