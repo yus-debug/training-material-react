@@ -31,7 +31,7 @@ export const Footer: React.FC<FooterProps> = ({
     <Box
       component="footer"
       sx={{
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#141218',
         py: 2,
         mt: 'auto', // This pushes footer to bottom
         borderTop: '1px solid #e0e0e0',
