@@ -54,7 +54,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
   // Inventory children
   const inventoryChildren = [
     {text:'Products',path:'/inventory/products',icon: <Inventory2 /> },
-    {text:'Categories',path:'/inventory/categories',icon: <Category />   },];
+    {text:'Categories',path:'/categories',icon: <Category />   },];
 
   const filteredInvChildren = query ? inventoryChildren.filter(c => match(c.text)) : inventoryChildren;
 
