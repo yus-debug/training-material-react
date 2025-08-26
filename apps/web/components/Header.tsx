@@ -7,6 +7,7 @@ import { AppBar, Toolbar, Typography, Button, Box, IconButton } from '@mui/mater
 import MenuIcon from '@mui/icons-material/Menu'
 import SearchIcon from '@mui/icons-material/Search'
 import { MdOutlineManageAccounts } from 'react-icons/md'
+import { CartIcon } from './cart/CartIcon'
 
 interface HeaderProps { onMenuClick?: () => void }
 
@@ -17,7 +18,7 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
 
   const go = (href: string, close = false) => () => {
     if (close) setOpen(false)
-    router.push(href as any) // typed-routes quick fix
+    router.push(href as any)
   }
 
   const NAV = [
@@ -46,7 +47,7 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
             <SearchIcon />
           </IconButton>
 
-          <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 0.5 }}>
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 0.5, mr: 1 }}>
             {NAV.map(({ href, label }) => (
               <Button
                 key={href}
@@ -61,6 +62,7 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
               </Button>
             ))}
           </Box>
+          <CartIcon />
         </Toolbar>
       </AppBar>
     </>

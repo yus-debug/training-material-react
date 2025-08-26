@@ -2,18 +2,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import {
-  Container,
-  Typography,
-  Button,
-  TextField,
-  Box,
-  Snackbar,
-  Pagination,
-} from '@mui/material';
+import {Container,Typography,Button,TextField,Box,Snackbar,Pagination,} from '@mui/material';
 import Alert from '@mui/material/Alert';           
 import type { AlertColor } from '@mui/material/Alert';
-
 import { Add, Download } from '@mui/icons-material';
 import { CustomerTable } from '../../components/CustomerTable';
 import { CustomerForm } from '../../components/CustomerForm';

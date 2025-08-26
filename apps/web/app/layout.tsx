@@ -10,12 +10,13 @@ import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { Sidebar } from '../components/Sidebar';
 import { Box } from '@mui/material';
+import { CartProvider } from '../contexts/CartContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);            // 👈 gate
+  const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
   const handleMenuClick = () => setSidebarOpen(v => !v);
@@ -23,18 +24,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        {/* Render nothing until client is ready, preventing hydration mismatch */}
         {mounted ? (
           <NextThemeProvider attribute="data-theme" defaultTheme="system" enableSystem>
             <Providers>
-              <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-                <Header onMenuClick={handleMenuClick} />
-                <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-                <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-                  {children}
+              {/* ✅ Wrap your UI with CartProvider */}
+              <CartProvider>
+                <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+                  <Header onMenuClick={handleMenuClick} />
+                  <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+                  <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+                    {children}
+                  </Box>
+                  <Footer logoSrc="/logo.png" />
                 </Box>
-                <Footer logoSrc="/logo.png" />
-              </Box>
+              </CartProvider>
             </Providers>
           </NextThemeProvider>
         ) : null}
