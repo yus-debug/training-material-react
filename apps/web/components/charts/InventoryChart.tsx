@@ -13,11 +13,11 @@ export const InventoryChart: React.FC<InventoryChartProps> = ({ data }) => {
     total > 0 ? `${((entry.value / total) * 100).toFixed(1)}%` : '0%';
 
   return (
-    <Paper sx={{ p: 3 }}>
+    <Paper sx={{ p: 3, height: 400, borderRadius: 3, overflow: 'hidden', padding:"50px"}}>
       <Typography variant="h6" gutterBottom>
         Inventory by Category
       </Typography>
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <Pie
             data={data}

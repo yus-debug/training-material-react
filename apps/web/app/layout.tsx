@@ -11,7 +11,8 @@ import { Footer } from '../components/Footer';
 import { Sidebar } from '../components/Sidebar';
 import { Box } from '@mui/material';
 import { CartProvider } from '../contexts/CartContext';
-
+import { AuthProvider } from '../contexts/AuthContext';
+import '../lib/fetchAuthPatch';
 const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -27,8 +28,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {mounted ? (
           <NextThemeProvider attribute="data-theme" defaultTheme="system" enableSystem>
             <Providers>
-              {/* ✅ Wrap your UI with CartProvider */}
               <CartProvider>
+                <AuthProvider>
                 <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
                   <Header onMenuClick={handleMenuClick} />
                   <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   </Box>
                   <Footer logoSrc="/logo.png" />
                 </Box>
+                </AuthProvider>
               </CartProvider>
             </Providers>
           </NextThemeProvider>

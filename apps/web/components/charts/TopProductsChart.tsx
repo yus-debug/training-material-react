@@ -44,7 +44,7 @@ export default function TopProductsChart({ data }: { data: TopProduct[] }) {
   };
 
   return (
-    <Paper sx={{ p: 3, height: 400 }}>
+    <Paper sx={{ p: 3, height: 400, borderRadius: 3, overflow: 'hidden', padding:"50px"}}>
       <Typography variant="h6" gutterBottom>
         Top Products by Sales
       </Typography>

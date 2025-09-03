@@ -17,12 +17,12 @@ interface SalesChartProps {
 
 export const SalesChart: React.FC<SalesChartProps> = ({ data }) => {
   return (
-    <Paper sx={{ p: 3 }}>
+    <Paper sx={{ p: 3, height: 400, borderRadius: 3, overflow: 'hidden', padding:"50px"}}>
       <Typography variant="h6" gutterBottom>
         Sales Trend
       </Typography>
 
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="month" />

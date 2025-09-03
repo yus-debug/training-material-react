@@ -1,25 +1,33 @@
 'use client';
 
 import * as React from 'react';
-import {Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText,Box, Divider, Collapse, TextField, InputAdornment, useMediaQuery, useTheme,Badge, Avatar, Tooltip, IconButton, Typography} from '@mui/material';
-import {Dashboard, Inventory, People, ShoppingCart, Assessment,ExpandLess, ExpandMore, Inventory2, Category, Search as SearchIcon,Settings, Logout} from '@mui/icons-material';
+import {
+  Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Box, Divider, Collapse,
+  TextField, InputAdornment, useMediaQuery, useTheme, Avatar, Tooltip, IconButton, Typography
+} from '@mui/material';
+import {
+  Dashboard, Inventory, People, ShoppingCart, Assessment, ExpandLess, ExpandMore,
+  Inventory2, Category, Search as SearchIcon, Logout
+} from '@mui/icons-material';
 import { useRouter, usePathname } from 'next/navigation';
 import { styled } from '@mui/material/styles';
 import ChevronLeft from '@mui/icons-material/ChevronLeft';
+import { useAuth } from '../contexts/AuthContext';
 
-const drawerWidth = 240;
+const drawerWidth = 300;
 
 export interface SidebarProps {
   open: boolean;
   onClose: () => void;
 }
-//  DrawerHeader 
+
+// DrawerHeader
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   padding: theme.spacing(0, 1),
   ...theme.mixins.toolbar,
-  justifyContent: 'flex-end',   
+  justifyContent: 'flex-end',
 }));
 
 export const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
@@ -28,46 +36,48 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
   const router = useRouter();
   const pathname = usePathname() || '';
 
-  // Badges
-  const inventoryBadge = 3;
-  const customersDot = true;
-  const ordersBadge = 12;     
+  //Auth
+  const { user: authUser, logout } = useAuth();
 
-  // user 
-  const user = { name: 'Yusuf Baba', role: 'Admin', initials: 'YB' };
+  const displayName = authUser?.displayName || 'Signed in';
+  const subline = authUser?.email || 'User';
+  const initials = (authUser?.displayName || authUser?.email || 'U?')
+    .split(' ')
+    .map((w) => w[0])
+    .slice(0, 2)
+    .join('')
+    .toUpperCase();
 
-  // Search
+  //Search
   const [q, setQ] = React.useState('');
   const query = q.trim().toLowerCase();
   const match = (label: string) => label.toLowerCase().includes(query);
 
-  // Collapsible
+  //Collapsible
   const [invOpen, setInvOpen] = React.useState(() => pathname.startsWith('/inventory'));
 
   const nav = (path: string) => {
-    router.push(path as any); 
+    router.push(path as any);
     if (isMobile) onClose();
   };
   const active = (path: string) =>
     path === '/' ? pathname === '/' : pathname.startsWith(path);
 
-  // Inventory children
+  //Inventory children
   const inventoryChildren = [
-    {text:'Products',path:'/inventory/products',icon: <Inventory2 /> },
-    {text:'Categories',path:'/categories',icon: <Category />   },];
+    { text: 'Products', path: '/products', icon: <Inventory2 /> },
+    { text: 'Categories', path: '/categories', icon: <Category /> },
+  ];
 
   const filteredInvChildren = query ? inventoryChildren.filter(c => match(c.text)) : inventoryChildren;
 
   const showDashboard = !query || match('Dashboard');
   const showInventory = !query || match('Inventory') || filteredInvChildren.length > 0;
 
-  //Inventory open searching
-  const inventoryExpanded = query ? true : invOpen;
-
   const menuItems = [
-    {text: 'Customers',path: '/customers',icon: <People />,badgeDot:customersDot },
-    {text: 'Orders',path: '/orders',icon: <ShoppingCart />,badgeCount:ordersBadge },
-    {text: 'Reports',path: '/reports',icon: <Assessment /> },
+    { text: 'Customers', path: '/customers', icon: <People /> },
+    { text: 'Orders', path: '/orders', icon: <ShoppingCart /> },
+    { text: 'Reports', path: '/reports', icon: <Assessment /> },
   ] as const;
 
   const filteredMenuItems = menuItems.filter(
@@ -85,7 +95,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
   const listRef = React.useRef<HTMLUListElement | null>(null);
   const onListKeyDown = (e: React.KeyboardEvent<HTMLUListElement>) => {
     const t = e.target as HTMLElement;
-    if (t.tagName === 'INPUT' || t.closest('input')) return; // ignore when typing search
+    if (t.tagName === 'INPUT' || t.closest('input')) return;
     if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
 
     const root = listRef.current;
@@ -97,7 +107,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
     const cur = document.activeElement as HTMLElement | null;
     const idx = buttons.findIndex(el => el === cur || (cur && el.contains(cur)));
 
-    //focused first item
     if (idx === -1) {
       buttons[0]?.focus();
       e.preventDefault();
@@ -105,14 +114,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
     }
 
     let next = 0;
-    if (e.key === 'ArrowDown') next = idx >= 0 ? Math.min(buttons.length - 1, idx + 1) : 0;
-    if (e.key === 'ArrowUp')   next = idx >= 0 ? Math.max(0, idx - 1) : buttons.length - 1;
+    if (e.key === 'ArrowDown') next = Math.min(buttons.length - 1, idx + 1);
+    if (e.key === 'ArrowUp')   next = Math.max(0, idx - 1);
 
     buttons[next]?.focus();
     e.preventDefault();
   };
 
-  //auto-focus first item 
+  //focus first item
   React.useEffect(() => {
     if (!open) return;
     const id = setTimeout(() => {
@@ -126,7 +135,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
 
   return (
     <Drawer
-      //ChevronRight given code
       variant={isMobile ? 'temporary' : 'persistent'}
       open={open}
       onClose={onClose}
@@ -135,10 +143,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
         width: drawerWidth,
         flexShrink: 0,
         '& .MuiDrawer-paper': { width: drawerWidth, boxSizing: 'border-box' },
-      }}>
-  
+      }}
+    >
       <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-        {/*DrawerHeader given code*/}
         <DrawerHeader>
           <IconButton onClick={onClose} aria-label="Close sidebar">
             <ChevronLeft />
@@ -146,9 +153,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
         </DrawerHeader>
         <Divider />
 
-        {/* Search */}
+        {/*Search */}
         <Box sx={{ p: 1, pb: 0.5, position: 'sticky', top: 0, bgcolor: 'background.paper', zIndex: 1 }}>
-          <TextField size="small" fullWidth placeholder="Search menu…" value={q} onChange={(e) => setQ(e.target.value)}
+          <TextField
+            size="small"
+            fullWidth
+            placeholder="Search menu…"
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -159,14 +171,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
           />
         </Box>
 
-        {/* Menu given code*/}
         <List
           ref={listRef}
           onKeyDown={onListKeyDown}
-          tabIndex={0}              // NEW: make list focusable so it receives key events
+          tabIndex={0}
           sx={{ pt: 0.5 }}
         >
-          {/* Dashboard given code */}
           {showDashboard && (
             <ListItem disablePadding>
               <ListItemButton data-nav="btn" selected={active('/dashboard')} onClick={() => nav('/dashboard')}>
@@ -176,27 +186,30 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
             </ListItem>
           )}
 
-          {/* Inventory badge and collapsible children) */}
           {showInventory && (
             <>
               <ListItem disablePadding>
-                <ListItemButton data-nav="btn" selected={active('/inventory') && !inventoryExpanded} onClick={() => setInvOpen(v => !v)} >
-                  <ListItemIcon>
-                    <Badge color="error" variant="standard"  badgeContent={inventoryBadge} >
-                      <Inventory />
-                    </Badge>
-                  </ListItemIcon>
+                <ListItemButton
+                  data-nav="btn"
+                  selected={active('/inventory') && !(query ? true : false)}
+                  onClick={() => setInvOpen(v => !v)}
+                >
+                  <ListItemIcon><Inventory /></ListItemIcon>
                   <ListItemText primary="Inventory" />
-
-                  {inventoryExpanded ? <ExpandLess /> : <ExpandMore />}
+                  {(query ? true : invOpen) ? <ExpandLess /> : <ExpandMore />}
                 </ListItemButton>
               </ListItem>
 
-              <Collapse in={inventoryExpanded} timeout="auto" unmountOnExit>
+              <Collapse in={query ? true : invOpen} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                   {filteredInvChildren.map(child => (
                     <ListItem key={child.path} disablePadding>
-                      <ListItemButton data-nav="btn" sx={{ pl: 6 }} selected={active(child.path)} onClick={() => nav(child.path)} >
+                      <ListItemButton
+                        data-nav="btn"
+                        sx={{ pl: 6 }}
+                        selected={active(child.path)}
+                        onClick={() => nav(child.path)}
+                      >
                         <ListItemIcon>{child.icon}</ListItemIcon>
                         <ListItemText primary={child.text} />
                       </ListItemButton>
@@ -207,53 +220,38 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
             </>
           )}
 
-          {/* menuItems Customers,Orders,Report*/}
           {filteredMenuItems.map((item) => (
             <ListItem key={item.path} disablePadding>
-              <ListItemButton data-nav="btn" selected={active(item.path)} onClick={() => nav(item.path)} >
-                <ListItemIcon>
-                  {/*badges*/}
-                  {'badgeCount' in item && item.badgeCount !== undefined ? (
-                    <Badge color="error" variant="standard" badgeContent={item.badgeCount} invisible={!item.badgeCount}>
-                      {item.icon}
-                    </Badge>
-                  ) : 'badgeDot' in item && item.badgeDot !== undefined ? (
-                    <Badge color="error" variant="dot" invisible={!item.badgeDot}>
-                      {item.icon}
-                    </Badge>
-                  ) : (
-                    item.icon
-                  )}
-                </ListItemIcon>
+              <ListItemButton data-nav="btn" selected={active(item.path)} onClick={() => nav(item.path)}>
+                <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.text} />
               </ListItemButton>
             </ListItem>
           ))}
         </List>
 
-        {/* Pushed down profile*/}
         <Box sx={{ mt: 'auto' }} />
         <Divider />
-
-        {/* User Profile*/}
         <Box sx={{ p: 2, display: 'flex', alignItems: 'center', gap: 1.5 }}>
-          <Avatar sx={{ width: 36, height: 36 }}>{user.initials}</Avatar>
+          <Avatar sx={{ width: 36, height: 36 }}>{initials}</Avatar>
           <Box sx={{ flex: 1, minWidth: 0 }}>
-            <Typography variant="body2" noWrap>{user.name}</Typography>
-            <Typography variant="caption" color="text.secondary" noWrap>{user.role}</Typography>
+            <Typography variant="body2" noWrap>{displayName}</Typography>
+            <Typography variant="caption" color="text.secondary" noWrap>{subline}</Typography>
           </Box>
-          <Tooltip title="Profile & Settings">
-            <IconButton size="small" onClick={() => { router.push('/profile' as any); if (isMobile) onClose(); }} aria-label="Open profile & settings">
-              <Settings fontSize="small" />
-            </IconButton>
-          </Tooltip>
           <Tooltip title="Logout">
-            <IconButton size="small" onClick={() => { router.push('/logout' as any); if (isMobile) onClose(); }} aria-label="Logout">
+            <IconButton
+              size="small"
+              onClick={async () => {
+                await logout();
+                if (isMobile) onClose();
+              }}
+              aria-label="Logout"
+            >
               <Logout fontSize="small" />
             </IconButton>
           </Tooltip>
         </Box>
       </Box>
     </Drawer>
-  );  
+  );
 };

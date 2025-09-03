@@ -1,4 +1,3 @@
-// apps/web/components/Header.tsx
 'use client'
 
 import { useState } from 'react'
@@ -8,10 +7,12 @@ import MenuIcon from '@mui/icons-material/Menu'
 import SearchIcon from '@mui/icons-material/Search'
 import { MdOutlineManageAccounts } from 'react-icons/md'
 import { CartIcon } from './cart/CartIcon'
+import { useAuth } from '../contexts/AuthContext'
 
 interface HeaderProps { onMenuClick?: () => void }
 
 export const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
+  const { user, loginGoogle } = useAuth()
   const path = usePathname()
   const router = useRouter()
   const [open, setOpen] = useState(false)
@@ -22,7 +23,7 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
   }
 
   const NAV = [
-    { href: '/', label: 'Home' },
+    { href: '/', label: 'Dashboard' },
     { href: '/inventory-list?delay=1200', label: 'Inventory' },
     { href: '/reports', label: 'Reports' },
   ] as const
@@ -62,7 +63,13 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
               </Button>
             ))}
           </Box>
+
           <CartIcon />
+          {!user && (
+            <Button color="inherit" onClick={() => loginGoogle({ forceAccountPicker: true })}>
+              Login
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
     </>

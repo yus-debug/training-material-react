@@ -34,6 +34,7 @@ export default function StockStatusChart({ data }: { data: StockDatum[] }) {
         display: 'flex',
         flexDirection: 'column',
         borderRadius: 3,
+        padding:"50px"
       }}
     >
       <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1 }}>
