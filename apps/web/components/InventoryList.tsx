@@ -2,20 +2,7 @@
 'use client';
 
 import React from 'react';
-import {
-  Card,
-  CardContent,
-  Typography,
-  Box,
-  Chip,
-  CircularProgress,
-  Alert,          
-  Button,
-  Tooltip,
-  Snackbar,
-  IconButton,
-  Slide,
-} from '@mui/material';
+import {Card,CardContent,Typography,Box,Chip,CircularProgress,Alert,Button,Tooltip,Snackbar,IconButton,Slide,} from '@mui/material';
 import MuiAlert from '@mui/material/Alert'; // Alert Snackbar
 import CloseIcon from '@mui/icons-material/Close';
 import ShoppingCartOutlined from '@mui/icons-material/ShoppingCartOutlined';

@@ -1,20 +1,13 @@
 // apps/web/app/dashboard/page.tsx
 'use client';
-
 import { useEffect, useMemo, useRef, useState } from 'react';
-import {
-  Container, Grid, Typography, Box, Button, Alert, Stack,
-  Card, CardContent, Skeleton
-} from '@mui/material';
+import {Container, Grid, Typography, Box, Button, Alert, Stack,Card, CardContent, Skeleton} from '@mui/material';
 import { Inventory, People, ShoppingCart, Warning } from '@mui/icons-material';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { useRouter } from 'next/navigation';
 import { DashboardCard } from '../../components/DashboardCard';
 import { useDashboardData, type DashboardData } from '../../hooks/useDashboardData';
-import {
-  LineChart, Line, XAxis, YAxis, CartesianGrid,
-  Tooltip, Legend, ResponsiveContainer, BarChart, Bar
-} from 'recharts';
+import {LineChart, Line, XAxis, YAxis, CartesianGrid,Tooltip, Legend, ResponsiveContainer, BarChart, Bar} from 'recharts';
 
 // % delta map
 type DeltaMap = {

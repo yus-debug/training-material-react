@@ -13,6 +13,7 @@ import { useDebounce } from '../../hooks/useDebounce';
 function useSmoothSpinner(loading: boolean, showDelay = 150, minVisible = 250) {
   const [show, setShow] = useState(false);
   const sinceRef = useRef<number | null>(null);
+  
   useEffect(() => {
     let showT: any, hideT: any;
     if (loading) {

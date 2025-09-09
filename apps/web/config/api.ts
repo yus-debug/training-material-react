@@ -1,10 +1,5 @@
-/**
- * API configuration for the application
- */
-
 // Use FastAPI backend URL
 export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
-
 export const API_ENDPOINTS = {
   fetchInventory:`${API_BASE_URL}/api/inventory`,
   fetchCustomers:`${API_BASE_URL}/api/customers`,

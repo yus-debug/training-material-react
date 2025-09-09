@@ -1,14 +1,6 @@
 // apps/web/components/charts/SalesChart.tsx
 import React from 'react';
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer
-} from 'recharts';
+import {LineChart,Line,XAxis,YAxis,CartesianGrid,Tooltip,ResponsiveContainer} from 'recharts';
 import { Paper, Typography } from '@mui/material';
 
 interface SalesChartProps {

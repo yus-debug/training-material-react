@@ -1,14 +1,8 @@
 'use client';
 
 import * as React from 'react';
-import {
-  Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Box, Divider, Collapse,
-  TextField, InputAdornment, useMediaQuery, useTheme, Avatar, Tooltip, IconButton, Typography
-} from '@mui/material';
-import {
-  Dashboard, Inventory, People, ShoppingCart, Assessment, ExpandLess, ExpandMore,
-  Inventory2, Category, Search as SearchIcon, Logout
-} from '@mui/icons-material';
+import {Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Box, Divider, Collapse,TextField, InputAdornment, useMediaQuery, useTheme, Avatar, Tooltip, IconButton, Typography} from '@mui/material';
+import {Dashboard, Inventory, People, ShoppingCart, Assessment, ExpandLess, ExpandMore,Inventory2, Category, Search as SearchIcon, Logout} from '@mui/icons-material';
 import { useRouter, usePathname } from 'next/navigation';
 import { styled } from '@mui/material/styles';
 import ChevronLeft from '@mui/icons-material/ChevronLeft';

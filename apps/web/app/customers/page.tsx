@@ -12,11 +12,7 @@ import { useCustomers, type SortBy, type SortDir } from '../../hooks/useCustomer
 import { useDebounce } from '../../hooks/useDebounce';
 
 export default function CustomersPage() {
-  const {
-    customers, loading, error, total,
-    fetchCustomers, createCustomer, updateCustomer, deleteCustomer
-  } = useCustomers();
-
+  const {customers, loading, error, total,fetchCustomers, createCustomer, updateCustomer, deleteCustomer} = useCustomers();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
@@ -71,7 +67,6 @@ export default function CustomersPage() {
   };
 
   const handleDeleteCustomer = async (customer: any) => {
-    if (!window.confirm(`Are you sure you want to delete ${customer.full_name}?`)) return;
     try {
       await deleteCustomer(customer.id);
       showNotification('Customer deleted successfully', 'success');

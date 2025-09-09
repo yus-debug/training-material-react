@@ -1,17 +1,8 @@
 'use client';
-
 import * as React from 'react';
 import { Paper, Stack, Typography, Box } from '@mui/material';
 import WarningAmberOutlined from '@mui/icons-material/WarningAmberOutlined';
-import {
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  LabelList,
-} from 'recharts';
+import {ResponsiveContainer,BarChart,Bar,XAxis,YAxis,Tooltip,LabelList,} from 'recharts';
 
 type StockDatum = { name: string; low: number; normal: number; high: number };
 
@@ -28,8 +19,7 @@ export default function StockStatusChart({ data }: { data: StockDatum[] }) {
 
   return (
     <Paper
-      sx={{
-        p: 3,
+      sx={{ p: 3,
         height: 400,                 // same height as your other charts
         display: 'flex',
         flexDirection: 'column',

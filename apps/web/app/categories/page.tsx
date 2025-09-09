@@ -9,17 +9,7 @@ import { useCategories } from '../../hooks/useCategories';
 import type { Category } from '../../hooks/useCategories';
 
 export default function CategoriesPage() {
-  const {
-    categories,
-    loading,
-    addCategory,
-    updateCategory,
-    deleteCategory,
-    reorderCategories,
-    resetCategories,
-    updateItemCounts
-  } = useCategories();
-
+  const {categories,loading,addCategory,updateCategory,deleteCategory,reorderCategories,resetCategories,updateItemCounts} = useCategories();
   const [formOpen, setFormOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [notification, setNotification] = useState({ 
@@ -36,7 +26,7 @@ export default function CategoriesPage() {
 
   const handleEditCategory = (categoryData: Omit<Category, 'id' | 'order'>) => {
     if (!editingCategory) return;
-    
+  
     updateCategory(editingCategory.id, categoryData);
     showNotification('Category updated successfully', 'success');
     setEditingCategory(null);
@@ -44,12 +34,8 @@ export default function CategoriesPage() {
 
   const handleDeleteCategory = (id: string) => {
     const category = categories.find(cat => cat.id === id);
-    if (!category) return;
-
-    if (window.confirm(`Are you sure you want to delete "${category.name}"?`)) {
       deleteCategory(id);
       showNotification('Category deleted successfully', 'success');
-    }
   };
 
   const handleReorderCategories = (newCategories: Category[]) => {
@@ -58,10 +44,8 @@ export default function CategoriesPage() {
   };
 
   const handleResetCategories = () => {
-    if (window.confirm('Reset to default categories? This will lose all customizations.')) {
       resetCategories();
       showNotification('Categories reset to defaults', 'success');
-    }
   };
 
   const showNotification = (message: string, severity: 'success' | 'error') => {

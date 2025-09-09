@@ -1,8 +1,5 @@
 import * as React from 'react';
-import {
-  Box, TextField, FormControl, InputLabel, Select, MenuItem,
-  InputAdornment, ToggleButton, ToggleButtonGroup, Button, Autocomplete,
-} from '@mui/material';
+import {Box, TextField, FormControl, InputLabel, Select, MenuItem,InputAdornment, ToggleButton, ToggleButtonGroup, Button, Autocomplete,} from '@mui/material';
 import { Search as SearchIcon, ArrowUpward, ArrowDownward, Clear as ClearIcon } from '@mui/icons-material';
 
 export type SortBy = 'name' | 'price' | 'quantity';

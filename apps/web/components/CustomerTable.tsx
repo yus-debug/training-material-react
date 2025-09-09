@@ -1,9 +1,6 @@
 // apps/web/components/CustomerTable.tsx
 import React from 'react';
-import {
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
-  IconButton, Menu, MenuItem, TableSortLabel, Chip
-} from '@mui/material';
+import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,IconButton, Menu, MenuItem, TableSortLabel, Chip} from '@mui/material';
 import { MoreVert, Edit, Delete, Visibility } from '@mui/icons-material';
 import type { SortBy, SortDir } from '../hooks/useCustomers';
 

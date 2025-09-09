@@ -1,11 +1,9 @@
 // apps/web/app/products/page.tsx
 'use client';
-
 import * as React from 'react';
 import {Container, Box, Typography, Button,Table, TableHead, TableRow, TableCell, TableBody,Dialog, DialogTitle, DialogContent, DialogActions,TextField, IconButton, Alert, Snackbar,MenuItem} from '@mui/material';
 import type { AlertColor } from '@mui/material';
 import { Add, Edit, Delete } from '@mui/icons-material';
-
 
 type Product = {
   id: number;
@@ -34,6 +32,7 @@ export default function ProductsPage() {
     message: '',
     severity: 'success',
   });
+  
   const toast = (message: string, severity: AlertColor = 'success') =>
     setSnack({ open: true, message, severity });
 
@@ -123,7 +122,7 @@ export default function ProductsPage() {
   };
 
   const remove = async (p: Product) => {
-    if (!confirm(`Delete "${p.name}"?`)) return;
+ 
     try {
       setError(null);
       const res = await fetch(API.one(p.id), { method: 'DELETE' });
