@@ -26,14 +26,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         {mounted ? (
-          <NextThemeProvider attribute="data-theme" defaultTheme="system" enableSystem>
+          <NextThemeProvider attribute="data-theme" defaultTheme="light" enableSystem>
             <Providers>
               <CartProvider>
                 <AuthProvider>
                 <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
                   <Header onMenuClick={handleMenuClick} />
                   <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-                  <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+                  <Box 
+                    component="main" 
+                    sx={{ flexGrow: 1, p: 3, pt: '94px',transition: 'margin-left 0.3s ease', marginLeft: sidebarOpen ? { xs: 0, md: '320px' } : 0 }}>
                     {children}
                   </Box>
                   <Footer logoSrc="/logo.png" />

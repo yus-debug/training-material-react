@@ -4,8 +4,9 @@
 import React from 'react';
 import { Box, Typography, Link, IconButton, Tooltip, Container } from '@mui/material';
 import { GitHub, LinkedIn, Instagram, Facebook, ArrowUpward } from '@mui/icons-material';
-
-// Conditional links based on props
+import { RiInstagramFill } from "react-icons/ri";
+import { FaFacebook } from "react-icons/fa";
+//  links
 interface FooterProps {
   showSocialLinks?: boolean;
   companyName?: string;
@@ -18,7 +19,7 @@ export const Footer: React.FC<FooterProps> = ({
   logoSrc = '/logo.png',
 }) => {
   
-  // Dynamic year
+  // year
   const currentYear = new Date().getFullYear();
 
   const scrollToTop = () => {
@@ -31,9 +32,9 @@ export const Footer: React.FC<FooterProps> = ({
     <Box
       component="footer"
       sx={{
-        backgroundColor: '#141218',
+        backgroundColor: '#FBA43C',
         py: 2,
-        mt: 'auto', // This pushes footer to bottom
+        mt: 'auto',
         borderTop: '1px solid #e0e0e0',
       }}>
       <Container maxWidth="lg">
@@ -48,23 +49,14 @@ export const Footer: React.FC<FooterProps> = ({
             gap: { xs: 1.5, md: 2 },
           }}>
           
-
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-            {/* Left side - Copyright */}
-            <Link href="/" underline="none" aria-label={`${companyName} home`}>
-              <Box
-                component="img"
-                src={logoSrc}
-                alt={`${companyName} logo`}
-                sx={{ height: 28, width: 'auto', display: 'block' }}
-              />
-            </Link>
-            <Typography variant="body2" color="primary">
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5}}>
+            {/*Copyright*/}
+            <Typography sx={{color:'white', fontSize:'15'}}>
               © {currentYear} {companyName}
             </Typography>
           </Box>
 
-          {/* Center - Links */}    
+          {/*Links*/}    
           <Box
             sx={{
               display: 'flex',
@@ -73,14 +65,14 @@ export const Footer: React.FC<FooterProps> = ({
               justifyContent: { xs: 'center', md: 'center' }, 
             }}>
 
-            <Link href="/about" underline="hover">About</Link>
-            <Link href="/hover" underline="hover">Contact</Link>
-            <Link href="/privacy" underline="hover">Privacy</Link>
-            <Link href="/terms" underline="hover">Terms of Service</Link>
-            <Link href="/help" underline="hover">Help</Link>
+            <Link href="/about" sx={{color:'white',textDecoration:'none'}}>About</Link>
+            <Link href="/hover" sx={{color:'white',textDecoration:'none'}}>Contact</Link>
+            <Link href="/privacy" sx={{color:'white',textDecoration:'none'}}>Privacy</Link>
+            <Link href="/terms" sx={{color:'white',textDecoration:'none'}}>Terms of Service</Link>
+            <Link href="/help"  sx={{color:'white',textDecoration:'none'}}>Help</Link>
           </Box>
             
-          {/* Right side - Social Icons */}
+          {/*Icons*/}
           {showSocialLinks && (
             <Box
               sx={{
@@ -89,32 +81,34 @@ export const Footer: React.FC<FooterProps> = ({
                 flexWrap: 'wrap',                              
                 justifyContent: { xs: 'center', md: 'flex-end' },
                 mt: { xs: 0.5, md: 0 },                        
-              }}>
+              }}>{/* 
               <Tooltip title="GitHub" arrow placement="top">
                 <IconButton href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub" color="primary">
                   <GitHub />
                 </IconButton>
+              </Tooltip>*/}
+
+              <Tooltip title="Instagram" arrow placement="top">
+                <IconButton href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" sx={{color:'white'}}>
+                  <RiInstagramFill />
+                </IconButton>
               </Tooltip>
               <Tooltip title="LinkedIn" arrow placement="top">
-                <IconButton href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" color="primary">
+                <IconButton href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" sx={{color:'white'}} >
                   <LinkedIn />
                 </IconButton>
               </Tooltip>
-              <Tooltip title="Instagram" arrow placement="top">
-                <IconButton href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" color="primary">
-                  <Instagram />
-                </IconButton>
-              </Tooltip>
               <Tooltip title="Facebook" arrow placement="top">
-                <IconButton href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" color="primary">
-                  <Facebook />
+                <IconButton href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" sx={{color:'white'}}>
+                  <FaFacebook />
                 </IconButton>
               </Tooltip>
+              {/* 
               <Tooltip title="Back to Top" arrow placement="top">
                 <IconButton onClick={scrollToTop} aria-label="Back to top" color="primary">
                   <ArrowUpward />
                 </IconButton>
-              </Tooltip>
+              </Tooltip>*/}
             </Box>
           )}
         </Box>

@@ -49,46 +49,86 @@ export const DashboardCard: React.FC<DashboardCardProps> = ({
   };
 
   return (
-    <Card
-      sx={{ height: '100%', cursor: onClick ? 'pointer' : 'default' }}
-      onClick={onClick}>
-      <CardContent>
-        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-          {/* Icon square skeleton */}
-          <Box sx={{ mr: 2 }}>
-            {loading ? (
-              <Skeleton variant="rounded" width={48} height={48} />
-            ) : (
-              <Box
-                sx={{
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  width: 48, height: 48, borderRadius: 1, backgroundColor: color, color: 'white',
-                }}>
-                {icon}
-              </Box>
-            )}
+    <Box sx={{ position: 'relative', height: '100%' }}>
+      {/* Icon */}
+      <Box
+        sx={{
+          position: 'absolute',
+          top: -30,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 2,
+        }}>
+        {loading ? (
+          <Skeleton variant="rounded" width={60} height={60} />
+        ) : (
+          <Box
+            sx={{
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center',
+              width: 60, 
+              height: 60, 
+              borderRadius: '50%',
+              backgroundColor: color, 
+              color: 'white',
+              boxShadow: 2,
+              fontSize: '25px',
+            }}>
+            {icon}
           </Box>
+        )}
+      </Box>
 
-          {/* Title and  Value skeleton */}
-          <Box>
+      <Card
+        sx={{ 
+          height: 140,
+          cursor: onClick ? 'pointer' : 'default',
+          pt: 2,
+          boxShadow: 3,
+          '&:hover': {
+            boxShadow: 6,
+            transform: 'translateY(-2px)',
+            transition: 'all 0.3s ease-in-out'
+          }
+        }}
+        onClick={onClick}>
+        <CardContent sx={{ 
+          textAlign: 'center', 
+          pt: 3,
+          pb: 2,
+          px: 2,
+          '&:last-child': { pb: 2 }
+        }}>
+          {/* content */}
+          <Box sx={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            height: '100%',
+            gap: 1
+          }}>
             {loading ? (
               <>
-                <Skeleton variant="text" width={120} height={24} sx={{ mb: 0.5 }} />
-                <Skeleton variant="text" width={80} height={36} />
+                <Skeleton variant="text" width={100} height={20} />
+                <Skeleton variant="text" width={60} height={28} />
                 {renderDelta()}
               </>
             ) : (
               <>
-                <Typography variant="h6" component="div">{title}</Typography>
-                <Typography variant="h4" component="div" sx={{ fontWeight: 'bold' }}>
+                <Typography variant="body2" component="div" sx={{ fontSize: '0.875rem', fontWeight: 500 }}>
+                  {title}
+                </Typography>
+                <Typography variant="h5" component="div" sx={{ fontWeight: 'bold', lineHeight: 1.2, color: color }}>
                   {value}
                 </Typography>
                 {renderDelta()}
               </>
             )}
           </Box>
-        </Box>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </Box>
   );
 };
